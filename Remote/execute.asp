@@ -1,4 +1,4 @@
-<!--#include file="api/common.inc"-->
+<!--#include file="api/common.asp"-->
 <%
 dbinit
 
