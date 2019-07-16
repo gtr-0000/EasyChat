@@ -5,9 +5,12 @@ dbinit
 dim rs
 
 on error resume next
-select case lcase(trim(request.querystring("command")))
-	case "list table"
-	Set rs = conn.OpenSchema(20)
+
+dim cmder
+cmder = split(trim(request.querystring("command"))," ")
+select case lcase(cmder(0))
+	case "schema"
+	Set rs = conn.OpenSchema(Cint(cmder(1)))
 
 	case else
 	set rs = dbexec(request.querystring("command"))
@@ -20,4 +23,6 @@ end if
 on error goto 0
 
 response.write rsfmth(rs, true)
+
+conn.close
 %>
