@@ -121,6 +121,7 @@ function apikey2uid(apikey)
 	set rs = dbexecf("select id from users where apikey = %s and logt > %t", Array(apikey,dateadd("n",-30,now())))
 	if not rs.eof then
 		apikey2uid = rs("id")
+		dbexecf "update users set logt = %t where id = %d", Array(now(),rs("id"))
 	else
 		apikey2uid = 0
 	end if
