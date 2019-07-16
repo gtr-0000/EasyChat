@@ -17,7 +17,7 @@ else
 	if rs.eof then
 		response.write "2 找不到该聊天室"
 	else
-		set rs2 = dbexecf("select * from user_group where userid = %d and user2id = %d", array(id,rs("id"))
+		set rs2 = dbexecf("select * from user_group where userid = %d and groupid = %d", array(id,rs("id")))
 		if not rs2.eof then
 			response.write "3 已加入该聊天室"
 		else

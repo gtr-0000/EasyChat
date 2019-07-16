@@ -17,8 +17,8 @@ else
 	if rs.eof then
 		response.write "2 找不到该用户"
 	else
-		set rs2 = dbexecf("select * from user_user where userid = %d and user2id = %d", array(id,rs("id"))
-		if not rs2.eof then
+		set rs2 = dbexecf("select * from user_user where userid = %d and user2id = %d", array(id,rs("id")))
+		if not rs2.eof or id = rs("id") then
 			response.write "3 已添加该用户"
 		else
 			dbexecf "insert into user_user values (%d,%d)", array(id,rs("id"))
