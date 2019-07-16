@@ -76,7 +76,11 @@ function rsfmt(byval rs, byval optitle)
 
 		while not rs.eof
 			for i = 0 to rs.fields.count - 1
-				str = str & cstr(rs.fields(i).value) & vbtab
+				if isnull(rs.fields(i).value) then
+					str = str & "" & vbtab
+				else
+					str = str & cstr(rs.fields(i).value) & vbtab
+				end if
 			next
 			str = str & vbcrlf
 			rs.movenext
@@ -84,4 +88,48 @@ function rsfmt(byval rs, byval optitle)
 	end if
 	rsfmt = str
 end function
+
+function rsfmth(byval rs, byval optitle)
+	dim str
+	str = "<table border='1'>"
+	if rs.fields.count > 0 then
+		if opTitle then
+			str = str & "<tr>"
+			for i = 0 to rs.fields.count - 1
+				str = str & "<th>" & xmlencode(rs.fields(i).name) & "</th>"
+			next
+			str = str & "</tr>"
+		end if
+
+		while not rs.eof
+			str = str & "<tr>"
+			for i = 0 to rs.fields.count - 1
+				if isnull(rs.fields(i).value) then
+					str = str & "<td><font color='gray'><i>NULL</i></font></td>"
+				else
+					str = str & "<td>" & xmlencode(cstr(rs.fields(i).value)) & "</td>"
+				end if
+			next
+			str = str & "</tr>"
+			rs.movenext
+		wend
+	end if
+	rsfmth = str & "</table>"
+end function
+
+Function XmlEncode(strText)
+	Dim aryChars
+	aryChars = Array(38, 60, 62, 34, 61, 39)
+	Dim i
+	For i = 0 To UBound(aryChars)
+		strText = Replace(strText, Chr(aryChars(i)), "&#" & aryChars(i) & ";")
+	Next
+	strText = Replace(strText, Chr(32), "&nbsp;")
+	strText = Replace(strText, Chr(9), "&nbsp;&nbsp;&nbsp;&nbsp;")
+	strText = Replace(strText, chr(13)&chr(10) , "<br/>")
+	strText = Replace(strText, Chr(10), "<br/>")
+	strText = Replace(strText, Chr(13), "<br/>")
+	XmlEncode = strText
+End Function
+
 %>
