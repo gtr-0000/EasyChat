@@ -8,13 +8,20 @@ on error resume next
 
 dim cmder
 cmder = split(trim(request.querystring("command"))," ")
-select case lcase(cmder(0))
-	case "schema"
-	Set rs = conn.OpenSchema(Cint(cmder(1)))
 
-	case else
-	set rs = dbexec(request.querystring("command"))
-end select
+if ubound(cmder)>=0 then
+	if lcase(cmder(0)) = "schema" then
+		if ubound(cmder)>=1 then
+			Set rs = conn.OpenSchema(Cint(cmder(1)))
+		else
+			err.raise 101,"execute","SCHEMA ×Ó¾äÓï·¨´íÎó¡£"
+		end if
+	else
+		set rs = dbexec(request.querystring("command"))
+	end if
+else
+	err.raise 100,"execute",""
+end if
 
 if err then
 	response.write "<font color='red'>" & XmlEncode(err.description) & "</font>"
