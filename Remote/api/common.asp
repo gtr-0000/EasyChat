@@ -117,6 +117,17 @@ function rsfmth(byval rs, byval optitle)
 	rsfmth = str & "</table>"
 end function
 
+function apikey2uid(apikey)
+	set rs = dbexecf("select id from users where apikey = %s and logt > %t", Array(apikey,dateadd("n",-30,now())))
+	if not rs.eof then
+		apikey2uid = rs("id")
+	else
+		apikey2uid = 0
+	end if
+	rs.close
+end function
+
+
 Function XmlEncode(strText)
 	Dim aryChars
 	aryChars = Array(38, 60, 62, 34, 61, 39)
