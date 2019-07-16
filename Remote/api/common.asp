@@ -39,7 +39,7 @@ function dbexecf(byval commfmt, byval argument)
 
 				case "t"
 				if isdate(argument(j)) then
-					command = command & "'" & argument(j) & "'"
+					command = command & "#" & argument(j) & "#"
 				else
 					err.raise 102,"dbexecf","不是时间: " & argument(j)
 					exit function
