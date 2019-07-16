@@ -15,6 +15,7 @@ if rs.eof then
 	rs.close
 	response.write "1 用户名或密码错误"
 else
+	rs.close
 	Randomize
 	apikey = ""
 	for i = 1 to 32: rnd(): next
