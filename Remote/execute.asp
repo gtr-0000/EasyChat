@@ -22,7 +22,7 @@ if err then
 end if
 on error goto 0
 
-response.write rsfmth(rs, true)
+response.write "<font style='font-family: ËÎÌו;'>" & rsfmth(rs, true) & "</font>"
 
 conn.close
 %>

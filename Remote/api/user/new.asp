@@ -1,5 +1,7 @@
 <!--#include file="../common.asp"-->
 <%
+response.contenttype = "text/plain"
+
 dbinit
 
 dim name, pass
