@@ -1,3 +1,4 @@
+<%@CODEPAGE="936"%>
 <%
 dim conn
 
