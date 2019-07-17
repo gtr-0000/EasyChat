@@ -22,7 +22,10 @@ else
 			response.write "2 聊天室名已被使用"
 		else
 			rs.close
-			set rs = dbexecf("insert into groups (name,regt) values (%s,%t)", array(name,now()))
+			dbexecf "insert into groups (name,regt,unum) values (%s,%t,1)", array(name,now())
+			set rs = dbexecf("select * from groups where name = %s", array(name))
+			dbexecf "insert into user_group values (%d,%d)", array(id,rs("id"))
+			rs.close
 			response.write "0 创建成功"
 		end if
 	end if
