@@ -15,22 +15,24 @@ else
 	mode = request.querystring("mode")
 	select case lcase(mode)
 		case "user"
+		response.write "0 查找成功" & vbcrlf
 		set rs = dbexecf("select * from user_user where userid = %d",array(id))
 		while not rs.eof
 			u2id = rs("user2id")
 			set rs2 = dbexecf("select name from users where id = %d",array(u2id))
-			response.write rs2("name") + vbcrlf
+			response.write rs2("name") & vbcrlf
 			rs2.close
 			rs.movenext
 		wend
 		rs.close
 
 		case "group"
+		response.write "0 查找成功" & vbcrlf
 		set rs = dbexecf("select * from user_group where userid = %d",array(id))
 		while not rs.eof
 			gid = rs("groupid")
 			set rs2 = dbexecf("select name from groups where id = %d",array(gid))
-			response.write rs2("name") + vbcrlf
+			response.write rs2("name") & vbcrlf
 			rs2.close
 			rs.movenext
 		wend

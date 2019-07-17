@@ -82,6 +82,7 @@ function rsfmt(byval rs, byval optitle)
 					str = str & cstr(rs.fields(i).value) & vbtab
 				end if
 			next
+			str = left(str,len(str)-1)
 			str = str & vbcrlf
 			rs.movenext
 		wend
