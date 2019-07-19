@@ -12,6 +12,11 @@ url = wscript.arguments(2)
 if url = replace(url, "://", "") then url = "http://" & url
 
 if wscript.arguments.count > 3 then
+'	if wscript.arguments(4) = "-" then
+'		dim fso, f
+'		set fso = createobject("scripting.filesystemobject")
+'		set f = fso.opentextfile(wscript.arguments(5))
+'		while not f.at
 	i = 3
 	while i < wscript.arguments.count
 		j = split(wscript.arguments(i),"=",2)
