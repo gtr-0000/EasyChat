@@ -119,13 +119,13 @@ function rsfmth(byval rs, byval optitle)
 	rsfmth = str & "</table>"
 end function
 
-function apikey2uid(apikey)
-	set rs = dbexecf("select id from users where apikey = %s and logt > %t", Array(apikey,dateadd("n",-30,now())))
+function apikey2name(apikey)
+	set rs = dbexecf("select name from ulist where apikey = %s and logt > %t", array(apikey,dateadd("n",-30,now())))
 	if not rs.eof then
-		apikey2uid = rs("id")
-		dbexecf "update users set logt = %t where id = %d", Array(now(),rs("id"))
+		apikey2name = rs("id")
+		dbexecf "update ulist set logt = %t where name = %s", array(now(),rs("name"))
 	else
-		apikey2uid = 0
+		apikey2name = ""
 	end if
 	rs.close
 end function

@@ -4,15 +4,14 @@ response.contenttype = "text/plain"
 
 dbinit
 
-dim apikey
-dim id
+dim apikey, uname
 
 apikey = request.querystring("apikey")
-id = apikey2uid(apikey)
-if id = 0 then
+uname = apikey2name(apikey)
+if uname = "" then
 	response.write "1 apikey´íÎó"
 else
-	dbexecf "update users set logt = %t, apikey = null where id = %d", Array(now(),id)
+	dbexecf "update users set ltime = %t, apikey = null where name = %s", Array(now(),uname)
 	response.write "0 ÍË³öµÇÂ½"
 end if
 

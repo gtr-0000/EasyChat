@@ -4,16 +4,16 @@ response.contenttype = "text/plain"
 
 dbinit
 
-dim id
+dim uname
 
 apikey = request.querystring("apikey")
-id = apikey2uid(apikey)
-if id = 0 then
+uname = apikey2name(apikey)
+if uname = "" then
 	response.write "1 apikey¥ÌŒÛ"
 else
 	dim rs, find
 	find = request.querystring("find")
-	set rs = dbexecf("select name from groups where name like %s",_
+	set rs = dbexecf("select name,unum from glist where name like %s",_
 		array("%" & replace(replace(replace(find,"%","[%]"),"_","[_]"),"[","[[]") & "%") _
 	)
 	response.write "0 ≤È’“≥…π¶" & vbcrlf
