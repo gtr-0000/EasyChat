@@ -4,7 +4,7 @@ response.contenttype = "text/plain"
 
 dbinit
 
-dim uname
+dim apikey, uname
 
 apikey = request.querystring("apikey")
 uname = apikey2name(apikey)
@@ -19,12 +19,12 @@ else
 		response.write "2 找不到该聊天室"
 	else
 		rs.close
-		set rs = dbexecf("select * from clist where uname = %s and gname = %s", array(uname,gname))
+		set rs = dbexecf("select * from clist where uname = %s and itype = 'group' and iname = %s", array(uname,gname))
 		if not rs.eof then
 			response.write "3 已加入该聊天室"
 		else
+			dbexecf "insert into clist values (%s,'group',%s,%t)", array(uname,gname,now())
 			dbexecf "update glist set unum = unum + 1 where name = %s", array(gname)
-			dbexecf "insert into clist values (%s,'group',%t,%s)", array(uname,now(),gname)
 			response.write "0 加入成功"
 		end if
 		rs.close

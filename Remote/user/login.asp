@@ -4,8 +4,7 @@ response.contenttype = "text/plain"
 
 dbinit
 
-dim name, pass
-dim rs, apikey, i
+dim name, pass, rs, apikey, i
 
 name = request.querystring("name")
 pass = request.querystring("pass")

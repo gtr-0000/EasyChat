@@ -4,7 +4,7 @@ response.contenttype = "text/plain"
 
 dbinit
 
-dim id
+dim apikey, uname
 
 apikey = request.querystring("apikey")
 uname = apikey2name(apikey)
@@ -24,7 +24,6 @@ else
 			rs.close
 			dbexecf "insert into glist values (%s,%t,1)", array(name,now())
 			dbexecf "insert into clist values (%s,'group',%s,%t)", array(uname,name,now())
-			rs.close
 			response.write "0 创建成功"
 		end if
 	end if

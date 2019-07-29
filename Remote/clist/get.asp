@@ -4,10 +4,10 @@ response.contenttype = "text/plain"
 
 dbinit
 
-dim uname
+dim apikey, uname
 
 apikey = request.querystring("apikey")
-uname = apikey2uid(apikey)
+uname = apikey2name(apikey)
 if uname = "" then
 	response.write "1 apikey´íÎó"
 else
@@ -19,7 +19,4 @@ else
 end if
 
 conn.close
-
-'lmmmmyhmmmsmsm
-
 %>

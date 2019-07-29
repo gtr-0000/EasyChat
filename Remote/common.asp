@@ -1,5 +1,7 @@
 <%@CODEPAGE="936"%>
 <%
+option explicit
+
 dim conn
 
 'dbinit 加载database到conn, 记得conn.close
@@ -12,7 +14,15 @@ function dbinit
 end function
 
 function dbexec(byval command)
+	on error resume next
 	set dbexec = conn.execute(command)
+	if err then
+		response.write command & vbcrlf & err.description
+		on error goto 0
+		response.end
+	else
+		on error goto 0
+	end if
 end function
 
 function dbexecf(byval commfmt, byval argument)
@@ -65,7 +75,7 @@ function dbexecf(byval commfmt, byval argument)
 end function
 
 function rsfmt(byval rs, byval optitle)
-	dim str
+	dim str, i
 	str = ""
 	if rs.fields.count > 0 then
 		if opTitle then
@@ -92,7 +102,7 @@ function rsfmt(byval rs, byval optitle)
 end function
 
 function rsfmth(byval rs, byval optitle)
-	dim str
+	dim str, i
 	str = "<table border='1'>"
 	if rs.fields.count > 0 then
 		if opTitle then
@@ -120,10 +130,10 @@ function rsfmth(byval rs, byval optitle)
 end function
 
 function apikey2name(apikey)
-	set rs = dbexecf("select name from ulist where apikey = %s and logt > %t", array(apikey,dateadd("n",-30,now())))
+	set rs = dbexecf("select name from ulist where apikey = %s and ltime > %t", array(apikey,dateadd("n",-30,now())))
 	if not rs.eof then
-		apikey2name = rs("id")
-		dbexecf "update ulist set logt = %t where name = %s", array(now(),rs("name"))
+		apikey2name = rs("name")
+		dbexecf "update ulist set ltime = %t where name = %s", array(now(),rs("name"))
 	else
 		apikey2name = ""
 	end if

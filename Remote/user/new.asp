@@ -4,8 +4,7 @@ response.contenttype = "text/plain"
 
 dbinit
 
-dim name, pass
-dim rs
+dim name, pass, rs
 
 name = trim(replace(replace(replace(request.querystring("name"),vbtab,""),chr(10),""),chr(13),""))
 pass = request.querystring("pass")

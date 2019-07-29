@@ -4,7 +4,7 @@ response.contenttype = "text/plain"
 
 dbinit
 
-dim uname
+dim apikey, uname
 
 apikey = request.querystring("apikey")
 uname = apikey2name(apikey)
@@ -13,7 +13,7 @@ if uname = "" then
 else
 	dim gname, rs, gid
 	gname = request.querystring("name")
-	set rs = dbexecf("select * from clist where uname = %s and gname = %s", array(uname,gname))
+	set rs = dbexecf("select * from clist where uname = %s and itype = 'group' and iname = %s", array(uname,gname))
 	if rs.eof then
 		response.write "3 未加入该聊天室"
 	else

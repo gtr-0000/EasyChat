@@ -4,7 +4,7 @@ response.contenttype = "text/plain"
 
 dbinit
 
-dim uname
+dim apikey, uname
 
 apikey = request.querystring("apikey")
 uname = apikey2name(apikey)

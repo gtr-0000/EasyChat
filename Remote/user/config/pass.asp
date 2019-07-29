@@ -4,11 +4,11 @@ response.contenttype = "text/plain"
 
 dbinit
 
-dim id
+dim apikey, uname
 
 apikey = request.querystring("apikey")
 uname = apikey2name(apikey)
-if uname = 0 then
+if uname = "" then
 	response.write "1 apikey´íÎó"
 else
 	dim pass, pold

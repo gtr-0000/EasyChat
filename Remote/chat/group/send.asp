@@ -4,7 +4,7 @@ response.contenttype = "text/plain"
 
 dbinit
 
-dim uname
+dim apikey, uname
 
 apikey = request.querystring("apikey")
 uname = apikey2name(apikey)
@@ -18,7 +18,8 @@ else
 	if rs.eof then
 		response.write "2 找不到该聊天室" & vbcrlf
 	else
-		dbexecf "insert into gchat values (%s,%s,%t,%s)", array(uname,gname,now(),ctext)
+		dbexecf "insert into gchat (uname,gname,ctime,ctext) values (%s,%s,%t,%s)", array(uname,gname,now(),ctext)
+		dbexecf "update clist set itime = %t where itype = 'group' and iname = %s", array(now(),gname)
 		response.write "0 发送成功" & vbcrlf
 	end if
 end if

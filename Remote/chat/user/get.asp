@@ -4,7 +4,7 @@ response.contenttype = "text/plain"
 
 dbinit
 
-dim umane
+dim apikey, uname
 
 apikey = request.querystring("apikey")
 uname = apikey2name(apikey)
@@ -20,7 +20,7 @@ else
 	else
 		response.write "0 获取成功" & vbcrlf
 		rs.close
-		set rs = dbexecf("select uname,ctime,ctext from gchat where uname = %s and tname = %s or tname = %s and uname = %s", array(uname, tname, umane, tname))
+		set rs = dbexecf("select uname,ctime,ctext from uchat where uname = %s and tname = %s or tname = %s and uname = %s", array(uname, tname, uname, tname))
 		response.write rsfmt(rs, false)
 		rs.close
 	end if

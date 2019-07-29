@@ -4,14 +4,14 @@ response.contenttype = "text/plain"
 
 dbinit
 
-dim uname
+dim apikey, uname
 
 apikey = request.querystring("apikey")
 uname = apikey2name(apikey)
 if uname = "" then
 	response.write "1 apikey错误"
 else
-	dim gname, rs
+	dim iname, rs
 	iname = request.querystring("name")
 	set rs = dbexecf("select * from ulist where name = %s", array(iname))
 	if rs.eof then
@@ -23,7 +23,7 @@ else
 		if not rs.eof then
 			response.write "3 已加入该用户"
 		else
-			dbexecf "insert into clist values (%s,'user',%t,%s)", array(uname,now(),iname)
+			dbexecf "insert into clist values (%s,'user',%s,%t)", array(uname,iname,now())
 			response.write "0 添加成功"
 		end if
 		rs.close
