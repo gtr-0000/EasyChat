@@ -1,4 +1,4 @@
 @echo off
 prompt $$ 
-path bin;script;%path%
+path exec;%path%
 cmd
