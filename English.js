@@ -1,11 +1,31 @@
 var fso=new ActiveXObject("scripting.filesystemobject");
 var word=fso.openTextFile("word.txt")
 while(!word.atEndOfStream){
-	GetIt(word.ReadLine());
-	WSH.Sleep(700);
+	GetThese(word.ReadLine());
 }
 word.close();
 
+function GetThese(str){
+	var strr=/[\t\r\n ]*[^\x00-\xff]*([a-zA-Z'.]+)/g;
+	var stro;
+	var strread="";
+	while(stro=strr.exec(str)){
+		if(
+			stro[1].match(/^([a-zA-Z]+\.|n|prep|adj|adv|v|\.+)$/)
+		){
+			if(strread!="")GetIt(strread);
+			strread="";
+		}else{
+			if(strread==""){
+				strread=stro[1];
+			}else{
+				strread+=" "+stro[1];
+			}
+		}
+	}
+	if(strread!="")GetIt(strread);
+}
+			
 function GetIt(word){
 	try{
 		WSH.stdout.write(word);
@@ -51,8 +71,9 @@ function GetIt(word){
 
 		WSH.stdout.writeline("\tOK");
 	}catch(err){
-		WSH.stderr.writeline(err.description);
+		WSH.stderr.writeline("\tERR\t"+err.description);
 	}
+	WSH.sleep(500);
 }
 
 function Hstr(url){
