@@ -1,5 +1,5 @@
 if wscript.arguments.count < 3 then
-	wscript.echo "用法: http {Get|Post} {path} {URL} [key1=value1 [key2=value2 ...]]"
+	wscript.echo "用法: http {Get|Post} {path} {URL} [key1=value1 [key2=value2 ...]]" + vbcrlf + "注意: 如果要输入 "" 字符，请用 ^A (即 chr(1)) 代替"
 	wscript.quit 0
 end if
 
@@ -17,7 +17,7 @@ if wscript.arguments.count > 3 then
 		j = split(wscript.arguments(i),"=",2)
 		if i <> 3 then param = param & "&"
 		param = param & URLEncode(j(0))
-		if ubound(j) = 1 then param = param & "=" & URLEncode(j(1))
+		if ubound(j) = 1 then param = param & "=" & URLEncode(replace(j(1),chr(1),""""))
 		i = i + 1
 	wend
 else

@@ -16,13 +16,13 @@ end function
 function dbexec(byval command)
 	on error resume next
 	set dbexec = conn.execute(command)
-	if err then
-		response.write command & vbcrlf & err.description
+	'if err then
+	'	response.write command & vbcrlf & err.description
+	'	on error goto 0
+	'	response.end
+	'else
 		on error goto 0
-		response.end
-	else
-		on error goto 0
-	end if
+	'end if
 end function
 
 function dbexecf(byval commfmt, byval argument)
