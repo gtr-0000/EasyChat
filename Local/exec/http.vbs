@@ -45,10 +45,10 @@ select case lcase(wscript.arguments(0))
 end select
 
 if err then
-	wscript.echo err.description
+	'wscript.echo err.description
 	wscript.quit err.number
 elseif xhr.status < 200 or xhr.status > 299 then
-	wscript.echo xhr.statustext
+	'wscript.echo xhr.statustext
 	wscript.quit xhr.status
 else
 	ado.mode = 3
@@ -57,7 +57,7 @@ else
 	ado.write xhr.responsebody
 	ado.savetofile path, 2
 	if err then
-		wscript.echo err.description
+		'wscript.echo err.description
 		wscript.quit err.number
 	end if
 	ado.close

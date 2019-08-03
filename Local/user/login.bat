@@ -24,7 +24,7 @@ password -32 >$NAME
 set NAME=
 set /p NAME=<$NAME
 del $NAME
-if not defined PASS goto input2
+if defined NAME if not defined PASS goto input2
 goto mouse
 
 :input2
@@ -39,16 +39,25 @@ del $PASS
 goto mouse
 
 :login
+if not defined NAME goto input1
+if not defined PASS goto input2
 timage user\login.0.bmp 0 0 /transparentblt
 rem 注意引号 " 变成了 chr(1), 即
+set RETURN=
 http get $RETURN "%SERVER%/user/login.asp" "name=%name:"=%" "pass=%pass:"=%"
+if %errorlevel% neq 0 set ERROR=连接错误 %errorlevel% & goto loginerror
 set /p RETURN=<$RETURN
 del $RETURN
 timage user\login.bmp 0 0 /transparentblt
 if "%RETURN:~,1%"=="0" (
 	echo %RETURN:~2%>$APIKEY
+	call clist\get
 ) else (
-	gdi "" "%RETURN:~2%*220*280*黑体*16*0000FFFF"
-	Tmouse /d 0 3 1
+	set ERROR=%RETURN:~2% & goto loginerror
 )
+goto mouse
+
+:loginerror
+gdi "" "%ERROR%*220*280*黑体*16*0000FFFF"
+Tmouse /d 0 3 1
 goto mouse

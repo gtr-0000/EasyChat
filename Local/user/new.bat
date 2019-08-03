@@ -26,7 +26,7 @@ password -32 >$NAME
 set NAME=
 set /p NAME=<$NAME
 del $NAME
-if not defined PASS goto input2
+if defined NAME if not defined PASS goto input2
 goto mouse
 
 :input2
@@ -38,7 +38,7 @@ password -32 -password >$PASS
 set PASS=
 set /p PASS=<$PASS
 del $PASS
-if not defined PAS2 goto input3
+if defined PASS if not defined PAS2 goto input3
 goto mouse
 
 :input3
@@ -54,12 +54,14 @@ goto mouse
 
 :new
 timage user\new.0.bmp 0 0 /transparentblt
-if not defined PASS goto newerror
-if not defined PAS2 goto newerror
-if "%PASS:"=""%" neq "%PAS2:"=""%" goto newerror
+if not defined NAME goto input1 
+if not defined PASS goto input2 
+if not defined PAS2 goto input3
+if "%PASS:"=""%" neq "%PAS2:"=""%" set ERROR=两次密码不一致 & goto newerror
 
 rem 注意引号 " 变成了 chr(1), 即
 http get $RETURN "%SERVER%/user/new.asp" "name=%name:"=%" "pass=%pass:"=%"
+if %errorlevel% neq 0 set ERROR=连接错误 %errorlevel% & goto loginerror
 set /p RETURN=<$RETURN
 del $RETURN
 timage user\new.bmp 0 0 /transparentblt
@@ -68,12 +70,12 @@ if "%RETURN:~,1%"=="0" (
 	Tmouse /d 0 3 1
 	exit /b
 ) else (
-	gdi "" "%RETURN:~2%*220*295*黑体*16*0000FFFF"
+	set ERROR=%RETURN:~2%
 	Tmouse /d 0 3 1
 )
 goto mouse
 
 :newerror
-gdi "" "两次密码不一致*220*295*黑体*16*0000FFFF"
+gdi "" "%ERROR%*220*295*黑体*16*0000FFFF"
 Tmouse /d 0 3 1
 goto mouse
