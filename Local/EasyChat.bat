@@ -1,9 +1,11 @@
 @echo off
-set SERVER=http://geq.web3v.com/EasyChat
+set "server=http://geq.web3v.com/EasyChat"
 rem 注意：所有的批处理工作文件夹都在EasyChat所在的文件夹下
 cd "%~dp0"
 title EasyChat 2019
 color f9
 mode 80,25
-path exec;%path%
-call user\login
+path common;common\bin;%path%
+rem @cmd /k prompt $$
+rem @exit /b
+call "user\login"
