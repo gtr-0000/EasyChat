@@ -1,8 +1,8 @@
 cls
-http get $return "%server%/list/user/add.asp" "apikey=%apikey%"
+http get "$return" "%server%/list/user/add.asp" "apikey=%apikey%"
 if %errorlevel% neq 0 set error=Á¬½Ó´íÎó %errorlevel% & goto loginerror
-set /p return=<$return
-del $return
+set /p return=<"$return"
+del "$return"
 if "%return:~,1%"=="0" (
 	set apikey=
 ) else (

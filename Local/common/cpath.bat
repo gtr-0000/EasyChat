@@ -1,7 +1,7 @@
 if not exist "%upath%" md "%upath%"
 if not exist "%upath%\list.txt" break > "%upath%\list.txt"
 set cpath=
-for /f "tokens=1,2 delims=	" %%a in (save\list.txt) do (
+for /f "usebackq tokens=1,2 delims=	" %%a in ("save\list.txt") do (
 	if "%%b"=="%cname%" (
 		set "cpath=%upath%\%%a"
 	)
