@@ -4,11 +4,10 @@ response.contenttype = "text/plain"
 
 dbinit
 
-dim name, pass, rs
+dim name, pass
 
 name = request.querystring("name")
 pass = request.querystring("pass")
-
 
 if len(name)<1 or len(name)>32 then
 	response.write "1 用户名长度应为1到16之间"
@@ -23,6 +22,7 @@ else
 	if not nameok then
 		response.write "1 用户名有特殊字符"
 	else
+		dim rs
 		set rs = dbexecf("select * from ulist where name = %s", array(name))
 		if not rs.eof then
 			rs.close

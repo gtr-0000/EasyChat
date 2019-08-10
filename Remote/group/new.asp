@@ -11,11 +11,17 @@ uname = apikey2name(apikey)
 if uname = "" then
 	response.write "1 apikey错误"
 else
-	dim name, rs
-	name = trim(replace(replace(replace(request.querystring("name"),vbtab,""),chr(10),""),chr(13),""))
-	if len(name)<1 or len(name)>32 then
+	dim nameok
+	nameok = true
+	if name <> trim(name) then nameok = false
+	if instr(1,name,vbtab,1) > 0 then nameok = false
+	if instr(1,name,chr(10),1) > 0 then nameok = false
+	if instr(1,name,chr(13),1) > 0 then nameok = false
+	if instr(1,name,chr(0),1) > 0 then nameok = false
+	if not nameok then
 		response.write "2 聊天室名长度不正确"
 	else
+		dim rs
 		set rs = dbexecf("select * from glist where name = %s", array(name))
 		if not rs.eof then
 			rs.close

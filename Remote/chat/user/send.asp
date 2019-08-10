@@ -11,8 +11,13 @@ uname = apikey2name(apikey)
 if uname = "" then
 	response.write "1 apikey错误"
 else
-	dim rs, tname, ctext
+	dim rs, tname, cname, ctext
 	tname = request.querystring("name")
+	if uname < tname then
+		cname = uname + vbcrlf + tname
+	else
+		cname = tname + vbcrlf + uname
+	end if
 	ctext = request.querystring("text")
 	set rs = dbexecf("select * from ulist where name = %s",array(tname))
 	if rs.eof then
@@ -20,7 +25,7 @@ else
 		response.write "2 找不到该用户" & vbcrlf
 	else
 		rs.close
-		dbexecf "insert into uchat (uname,tname,ctime,ctext) values (%s,%s,%t,%s)", array(uname,tname,now(),ctext)
+		dbexecf "insert into uchat (uname,cname,ctime,ctext) values (%s,%s,%t,%s)", array(uname,cname,now(),ctext)
 		set rs = dbexecf("select * from clist where uname = %s and itype = 'user' and iname = %s", array(tname,uname))
 		if rs.eof then
 			dbexecf "insert into clist values (%s,'user',%s,null)", array(tname,uname)

@@ -13,11 +13,8 @@ if uname = "" then
 else
 	dim rs, find
 	find = request.querystring("find")
-	set rs = dbexecf("select name,(not isnull(apikey) and ltime > %t) from ulist where name like %s",_
-		array( _
-			dateadd("n", -30, now()),_
-			"%" & replace(replace(replace(find,"%","[%]"),"_","[_]"),"[","[[]") & "%" _
-		) _
+	set rs = dbexecf("select name from ulist where name like %s",_
+		array("%" & replace(replace(replace(find,"%","[%]"),"_","[_]"),"[","[[]") & "%") _
 	)
 	response.write "0 ≤È’“≥…π¶" & vbcrlf
 	response.write rsfmt(rs, false)
