@@ -1,3 +1,4 @@
+:init
 cls
 timage "user\new.bmp" 0 0
 set name=
@@ -51,10 +52,10 @@ del "$input"
 goto mouse
 
 :new
-timage "user\new.0.bmp" 0 0 /transparentblt
 if not defined name goto input1 
 if not defined pass goto input2 
 if not defined pas2 goto input3
+timage "user\new.0.bmp" 0 0 /transparentblt
 if "%pass:"=""%" neq "%pas2:"=""%" set error=两次密码不一致 & goto newerror
 
 rem 注意引号 " 变成了 chr(1), 即
@@ -64,7 +65,7 @@ set /p return=<"$return"
 del "$return"
 timage "user\new.bmp" 0 0 /transparentblt
 if "%return:~,1%"=="0" (
-	gdi "" "注册成功*270*295*宋体*14*ff0000ff"
+	gdi "" "注册成功*270*295*黑体*14*ff0000ff"
 	tmouse /d 0 3 1
 	exit /b
 ) else (
@@ -74,6 +75,6 @@ if "%return:~,1%"=="0" (
 goto mouse
 
 :newerror
-gdi "" "%error%*240*300*宋体*14*0000ffff"
+gdi "" "%error%*240*300*黑体*14*0000ffff"
 tmouse /d 0 3 1
 goto mouse

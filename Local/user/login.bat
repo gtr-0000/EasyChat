@@ -13,7 +13,7 @@ set /a y=%errorlevel%,x=y/1000,y=y%%1000
 if %y% equ 9 if %x% geq 21 if %x% leq 58 goto input1
 if %y% equ 13 if %x% geq 21 if %x% leq 58 goto input2
 if %y% geq 20 if %y% leq 21 if %x% geq 21 if %x% leq 37 goto login
-if %y% geq 20 if %y% leq 21 if %x% geq 46 if %x% leq 53 call "user\new.bat"
+if %y% geq 20 if %y% leq 21 if %x% geq 41 if %x% leq 58 call "user\new.bat"
 goto mouse
 
 :input1
@@ -63,6 +63,6 @@ if "%return:~,1%"=="0" (
 goto mouse
 
 :loginerror
-gdi "" "%error%*240*300*ËÎÌו*14*0000ffff"
+gdi "" "%error%*240*300*÷ÚÌו*14*0000ffff"
 tmouse /d 0 3 1
 goto mouse
