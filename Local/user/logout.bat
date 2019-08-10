@@ -1,5 +1,4 @@
 cls
-timage "user\logout.bmp" 0 0
 http get $return "%server%/user/logout.asp" "apikey=%apikey%"
 if %errorlevel% neq 0 set error=Á¬½Ó´íÎó %errorlevel% & goto loginerror
 set /p return=<$return
