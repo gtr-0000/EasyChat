@@ -9,7 +9,7 @@ dim name, pass
 name = request.querystring("name")
 pass = request.querystring("pass")
 
-if len(name)<1 or len(name)>32 then
+if len(name)<1 or len(name)>16 then
 	response.write "1 用户名长度应为1到16之间"
 else
 	dim nameok
