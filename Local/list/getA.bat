@@ -15,6 +15,7 @@ http get "%upath%\$return" "%server%/list/get.asp" "apikey=%apikey%"
 
 if exist "%upath%\#exit" exit /b
 
+if %errorlevel% neq 0 echo Á¬½Ó´íÎó !errorlevel!>"%upath%\$getAerr" & goto loop
 set /p $return=<"%upath%\$return"
 if "%return:~,1%"=="0" (
 	del "%upath%\$getAerr" >nul 2>nul

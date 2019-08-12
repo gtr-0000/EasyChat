@@ -1,8 +1,7 @@
 if exist "%upath%\#open" del "%upath%\#open" >nul 2>nul
 if exist "%upath%\#open" exit /b
-2>>"%upath%\debug.txt" (call :main 3>"%upath%\#open")
 break >> "%upath%\clist.txt"
-del "%upath%\#open" 2>nul
+2>>"%upath%\debug.txt" (call :main 3>"%upath%\#open")
 exit /b
 
 :main
