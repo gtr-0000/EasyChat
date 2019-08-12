@@ -1,17 +1,21 @@
-if exist "%upath%\#open" del "%upath%\#open" 2>nul || exit /b
+if exist "%upath%\#open" del "%upath%\#open" >nul 2>nul
+if exist "%upath%\#open" exit /b
 2>>"%upath%\debug.txt" (call :main 3>"%upath%\#open")
 break >> "%upath%\clist.txt"
 del "%upath%\#open" 2>nul
 exit /b
 
 :main
-start /min cmd /c "list\getA.bat" 3>nul
+del "%upath%\#exit" >nul 2>nul
+start /b cmd /c "list\getA.bat"
 
 cls
-set lp=0
-set last=1
+set lp=1
+set last=
 set first=
 setlocal enabledelayedexpansion
+set "mtitle=USER !uname! | EasyChat"
+title !mtitle!
 
 :mouse
 tcurs /crv 0
@@ -23,7 +27,7 @@ for /f "usebackq tokens=1-4 delims=	" %%a in ("%upath%\clist.txt") do (
 	set ln=%%a
 )
 set /a ln1=ln-4
-if defined last set lp=%ln1%
+::if defined last set lp=%ln1%
 
 set last=
 set first=
@@ -44,12 +48,15 @@ for /l %%a in (%lp%,1,%lp1%) do (
 		)
 	)
 )
+if exist "%upath%\$getAerr" (
+	set /p error=<"%upath%\$getAerr"
+	set disp=!disp! "!error!*240*300*ºÚÌå*14*0000ffff"
+)
 
-gdi "" !disp!
-tmouse /r 0 -1 1
+gdi "/T:!mtitle!" !disp!
+tmouse /d 0 1 1
 if %errorlevel% lss 0 goto mouse
 set /a y=%errorlevel%,x=y/1000,y=y%%1000
-title %x% %y%
 
 set select=
 if %y% equ 1 (
@@ -58,10 +65,9 @@ if %y% equ 1 (
 )
 if %x% geq 6 if %x% leq 70 (
 	for /l %%a in (1,1,5) do (
-		set /a y1=%%a*3+1,y2=%%a*3+3
+		set /a y1=%%a*4+1,y2=%%a*4+3
 		if %y% geq !y1! if %y% leq !y2! set select=%%a
 	)
-	title !select! S
 	if defined select (
 		set /a select+=lp-1 
 		if !select! leq !ln! (
@@ -84,7 +90,10 @@ tmouse /d 0 -1 1
 set /a y=%errorlevel%,x=y/1000,y=y%%1000
 if %x% geq 3 if %x% leq 10 (
 	if %y% equ 3 call "user\config\pass.bat"
-	if %y% equ 4 exit /b
+	if %y% equ 4 (
+		break > "%upath%\#exit"
+		exit /b
+	)
 	if %y% equ 6 call "app\update.bat"
 )
 goto mouse
@@ -97,6 +106,5 @@ if %x% geq 66 if %x% leq 75 (
 	if %y% equ 3 call "find\user.bat"
 	if %y% equ 4 call "find\group.bat"
 	if %y% equ 5 call "group\new.bat"
-	if %y% equ 6 start /min cmd /c "list\getA.bat" 3>nul
 )
 goto mouse

@@ -1,5 +1,7 @@
 :init
 cls
+set "mtitle=EasyChat 2019"
+title %mtitle%
 timage "user\login.bmp" 0 0
 set name=
 set pass=
@@ -31,15 +33,15 @@ tcurs /pos 25 13
 echo;                                
 tcurs /pos 25 13 /crv 1
 timage "user\login.bmp" 0 0 /transparentblt
-password -32 -password >"$input"
+password -password >"$input"
 set pass=
 set /p pass=<"$input"
 del "$input"
 goto mouse
 
 :login
-if not defined name goto input1
-if not defined pass goto input2
+if not defined name set name=a1
+if not defined pass set pass=123
 timage "user\login.0.bmp" 0 0 /transparentblt
 rem 注意引号 " 变成了 chr(1), 即
 set return=
@@ -61,6 +63,6 @@ if "%return:~,1%"=="0" (
 goto mouse
 
 :loginerror
-gdi "" "%error%*240*300*黑体*14*0000ffff"
+gdi "/T:%mtitle%" "%error%*240*300*黑体*14*0000ffff"
 tmouse /d 0 3 1
 goto mouse

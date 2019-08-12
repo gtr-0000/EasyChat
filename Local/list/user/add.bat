@@ -11,5 +11,5 @@ if "%return:~,1%"=="0" (
 
 exit /b
 :error
-gdi "" "%error%*240*300*ËÎÌו*14*0000ffff"
+gdi "/T:%mtitle%" "%error%*240*300*ËÎÌו*14*0000ffff"
 tmouse /d 0 3 1

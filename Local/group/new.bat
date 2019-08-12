@@ -34,7 +34,7 @@ set /p return=<"$return"
 del "$return"
 timage "group\new.bmp" 0 0 /transparentblt
 if "%return:~,1%"=="0" (
-	gdi "" "创建成功*270*295*黑体*14*ff0000ff"
+	gdi "/T:%mtitle%" "创建成功*270*295*黑体*14*ff0000ff"
 	tmouse /d 0 3 1
 	exit /b
 ) else (
@@ -44,6 +44,6 @@ if "%return:~,1%"=="0" (
 goto mouse
 
 :newerror
-gdi "" "%error%*240*300*黑体*14*0000ffff"
+gdi "/T:%mtitle%" "%error%*240*300*黑体*14*0000ffff"
 tmouse /d 0 3 1
 goto mouse

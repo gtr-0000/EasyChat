@@ -1,10 +1,10 @@
 @echo off
 cls
 
-del "%upath%\#open" 2>nul
+del "%upath%\#open" >nul 2>nul
 if not exist "%upath%\#open" exit /b
 2>>"%upath%\debug2.txt" (call :main 3>"%upath%\#getA")
-del "%upath%\#getA" 2>nul
+del "%upath%\#getA" >nul 2>nul
 exit /b
 
 :main
@@ -13,14 +13,13 @@ setlocal enabledelayedexpansion
 :loop
 http get "%upath%\$return" "%server%/list/get.asp" "apikey=%apikey%"
 
-del "%upath%\#open" 2>nul
-if not exist "%upath%\#open" exit /b
+if exist "%upath%\#exit" exit /b
 
 set /p $return=<"%upath%\$return"
 if "%return:~,1%"=="0" (
-	del "$getAerr" 2>nul
+	del "%upath%\$getAerr" >nul 2>nul
 ) else (
-	echo !return:~2!>"$getAerr"
+	echo !return:~2!>"%upath%\$getAerr"
 	sleep 1000
 	goto loop
 )
@@ -36,7 +35,6 @@ for /f "usebackq" %%a in ("%upath%\$return") do set /a n+=1
 del "%upath%\$return"
 sleep 1000
 
-del "%upath%\#open" 2>nul
-if not exist "%upath%\#open" exit /b
+if exist "%upath%\#exit" exit /b
 
 goto loop

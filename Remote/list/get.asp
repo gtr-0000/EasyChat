@@ -13,7 +13,7 @@ if uname = "" then
 else
 	dim rs
 	response.write "0 获取成功" & vbcrlf
-	set rs = dbexecf("select itype,iname,itime from clist where uname = %s",array(uname))
+	set rs = dbexecf("select itype,iname,itime from clist where uname = %s order by itime desc",array(uname))
 	response.write rsfmt(rs, false)
 	rs.close
 end if
