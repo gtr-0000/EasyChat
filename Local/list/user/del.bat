@@ -1,12 +1,12 @@
 cls
 http get "$return" "%server%/list/user/del.asp" "apikey=%apikey%"
-if %errorlevel% neq 0 set error=连接错误 %errorlevel% & goto loginerror
+if %errorlevel% neq 0 set "error=连接错误 %errorlevel%" & goto error
 set /p return=<"$return"
 del "$return"
 if "%return:~,1%"=="0" (
 	set apikey=
 ) else (
-	set error=%return:~2% & goto loginerror
+	"set error=%return:~2%" & goto error
 )
 
 exit /b

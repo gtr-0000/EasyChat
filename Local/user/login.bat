@@ -44,21 +44,19 @@ timage "user\login.0.bmp" 0 0 /transparentblt
 rem 注意引号 " 变成了 chr(1), 即
 set return=
 http get "$return" "%server%/user/login.asp" "name=%name:"=%" "pass=%pass:"=%"
-if %errorlevel% neq 0 set error=连接错误 %errorlevel% & goto loginerror
+if %errorlevel% neq 0 set "error=连接错误 %errorlevel%" & goto loginerror
 set /p return=<"$return"
 del "$return"
 timage "user\login.bmp" 0 0 /transparentblt
 if "%return:~,1%"=="0" (
 	set "uname=%name:"=""%"
-	set apikey=%return:~2%
+	set "apikey=%return:~2%"
 	call "upath.bat"
-	call echo %%upath%%
 	call "list\get.bat"
 	call "user\logout.bat"
 	goto init
-	rem ###
 ) else (
-	set error=%return:~2% & goto loginerror
+	set "error=%return:~2%" & goto loginerror
 )
 goto mouse
 

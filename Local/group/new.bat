@@ -26,11 +26,10 @@ goto mouse
 :new
 if not defined name goto input1 
 timage "group\new.0.bmp" 0 0 /transparentblt
-if "%pass:"=""%" neq "%pas2:"=""%" set error=两次密码不一致 & goto newerror
 
 rem 注意引号 " 变成了 chr(1), 即
-http get "$return" "%server%/group/new.asp" "name=%name:"=%" "pass=%pass:"=%"
-if %errorlevel% neq 0 set error=连接错误 %errorlevel% & goto newerror
+http get "$return" "%server%/group/new.asp" "apikey=%apikey%" "name=%name:"=%"
+if %errorlevel% neq 0 set "error=连接错误 %errorlevel%" & goto newerror
 set /p return=<"$return"
 del "$return"
 timage "group\new.bmp" 0 0 /transparentblt
@@ -39,7 +38,7 @@ if "%return:~,1%"=="0" (
 	tmouse /d 0 3 1
 	exit /b
 ) else (
-	set error=%return:~2%
+	set "error=%return:~2%"
 	goto newerror
 )
 goto mouse
