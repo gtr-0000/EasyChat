@@ -1,20 +1,102 @@
-:init
+if exist "%upath%\#open" del "%upath%\#open" 2>nul || exit /b
+2>>"%upath%\debug.txt" (call :main 3>"%upath%\#open")
+break >> "%upath%\clist.txt"
+del "%upath%\#open" 2>nul
+exit /b
+
+:main
+start /min cmd /c "list\getA.bat" 3>nul
+
 cls
-timage "list\get.bmp" 0 0
+set lp=0
+set last=1
+set first=
+setlocal enabledelayedexpansion
 
 :mouse
 tcurs /crv 0
-timage "list\get.bmp" 0 0 /transparentblt
-tmouse /d 0 1 1
+set ln=0
+for /f "usebackq tokens=1-4 delims=	" %%a in ("%upath%\clist.txt") do (
+	set l%%aty=%%b
+	set l%%ana=%%c
+	set l%%ati=%%d
+	set ln=%%a
+)
+set /a ln1=ln-4
+if defined last set lp=%ln1%
+
+set last=
+set first=
+if %lp% geq %ln1% set /a lp=ln1,last=1
+if %lp% leq 1 set /a lp=1,first=1
+
+set disp="list\get.bmp*0*0"
+if not defined first set disp=!disp! "list\get.up.bmp*608*64"
+if not defined last set disp=!disp! "list\get.down.bmp*608*368"
+set /a lp1=lp+4
+for /l %%a in (%lp%,1,%lp1%) do (
+	if %%a leq %ln% (
+		set /a "y=(%%a-lp)*64+64,y1=y+16"
+		if "!l%%aty!"=="group" (
+			set disp=!disp! "list\get.item.bmp*48*!y!" "群 !l%%ana!*60*!y1!*黑体*12*000000ff"
+		) else if "!l%%aty!"=="user" (
+			set disp=!disp! "list\get.item.bmp*48*!y!" "用户 !l%%ana!*60*!y1!*黑体*12*000000ff"
+		)
+	)
+)
+
+gdi "" !disp!
+tmouse /r 0 -1 1
 if %errorlevel% lss 0 goto mouse
 set /a y=%errorlevel%,x=y/1000,y=y%%1000
 title %x% %y%
+
+set select=
 if %y% equ 1 (
 	if %x% geq 2 if %x% leq 3 goto menu
 	if %x% geq 76 if %x% leq 77 goto add
 )
-;;;
+if %x% geq 6 if %x% leq 70 (
+	for /l %%a in (1,1,5) do (
+		set /a y1=%%a*3+1,y2=%%a*3+3
+		if %y% geq !y1! if %y% leq !y2! set select=%%a
+	)
+	title !select! S
+	if defined select (
+		set /a select+=lp-1 
+		if !select! leq !ln! (
+			for %%a in (!select!) do (
+				set cname=!l%%ana!
+				start "" cmd /c "chat\!l%%aty!\get.bat"
+			)
+		)
+	)
+)
+if %x% geq 76 if %x% leq 77 (
+	if %y% equ 4 set /a lp-=4&set last=
+	if %y% equ 23 set /a lp+=4
+)
 goto mouse
 
 :menu
-timage "list\get.menu.bmp"
+timage "list\get.menu.bmp" 16 32 /transparentblt
+tmouse /d 0 -1 1
+set /a y=%errorlevel%,x=y/1000,y=y%%1000
+if %x% geq 3 if %x% leq 10 (
+	if %y% equ 3 call "user\config\pass.bat"
+	if %y% equ 4 exit /b
+	if %y% equ 6 call "app\update.bat"
+)
+goto mouse
+
+:add
+timage "list\get.add.bmp" 520 32 /transparentblt
+tmouse /d 0 -1 1
+set /a y=%errorlevel%,x=y/1000,y=y%%1000
+if %x% geq 66 if %x% leq 75 (
+	if %y% equ 3 call "find\user.bat"
+	if %y% equ 4 call "find\group.bat"
+	if %y% equ 5 call "group\new.bat"
+	if %y% equ 6 start /min cmd /c "list\getA.bat" 3>nul
+)
+goto mouse
