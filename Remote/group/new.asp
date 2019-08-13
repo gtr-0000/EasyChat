@@ -21,6 +21,7 @@ else
 		if name <> trim(name) then nameok = false
 		if instr(1,name,vbtab,1) > 0 then nameok = false
 		if instr(1,name,"*",1) > 0 then nameok = false
+		if instr(1,name,"""",1) > 0 then nameok = false
 		if instr(1,name,chr(10),1) > 0 then nameok = false
 		if instr(1,name,chr(13),1) > 0 then nameok = false
 		if instr(1,name,chr(0),1) > 0 then nameok = false

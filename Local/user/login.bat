@@ -1,6 +1,6 @@
 :init
 cls
-set "mtitle=EasyChat 2019"
+set "mtitle=EasyChat"
 title %mtitle%
 timage "user\login.bmp" 0 0
 set name=

@@ -12,6 +12,6 @@ for /l %%a in (9999,-1,1) do (
 		set "upath=%%~a"
 	)
 )
-(echo "%upath%"	%uname%)>"save\list.txt"
+(echo "%upath%"	%uname%)>>"save\list.txt"
 set "upath=save\%upath%"
 md "%upath%"

@@ -24,8 +24,8 @@ if "%return:~,1%"=="0" (
 	sleep 1000
 	goto loop
 )
-set n=-1
-for /f "usebackq" %%a in ("%upath%\$return") do set /a n+=1
+set n=0
+for /f "skip=1 usebackq" %%a in ("%upath%\$return") do set /a n+=1
 <"%upath%\$return" >"%upath%\clist.txt" (
 	set /p return=
 	for /l %%a in (1,1,%n%) do (

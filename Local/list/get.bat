@@ -12,9 +12,8 @@ cls
 set lp=1
 set last=
 set first=
-setlocal enabledelayedexpansion
-set "mtitle=USER !uname! | EasyChat"
-title !mtitle!
+set "mtitle=%uname: =*%EasyChat"
+title %mtitle%
 
 :mouse
 tcurs /crv 0
@@ -26,13 +25,13 @@ for /f "usebackq tokens=1-4 delims=	" %%a in ("%upath%\clist.txt") do (
 	set ln=%%a
 )
 set /a ln1=ln-4
-::if defined last set lp=%ln1%
 
 set last=
 set first=
 if %lp% geq %ln1% set /a lp=ln1,last=1
 if %lp% leq 1 set /a lp=1,first=1
 
+setlocal enabledelayedexpansion
 set disp="list\get.bmp*0*0"
 if not defined first set disp=!disp! "list\get.up.bmp*608*64"
 if not defined last set disp=!disp! "list\get.down.bmp*608*368"
@@ -53,6 +52,8 @@ if exist "%upath%\$getAerr" (
 )
 
 gdi "/T:!mtitle!" !disp!
+endlocal
+
 tmouse /d 0 1 1
 if %errorlevel% lss 0 goto mouse
 set /a y=%errorlevel%,x=y/1000,y=y%%1000
@@ -63,6 +64,7 @@ if %y% equ 1 (
 	if %x% geq 76 if %x% leq 77 goto add
 )
 if %x% geq 6 if %x% leq 70 (
+	setlocal enabledelayedexpansion
 	for /l %%a in (1,1,5) do (
 		set /a y1=%%a*4+1,y2=%%a*4+3
 		if %y% geq !y1! if %y% leq !y2! set select=%%a
@@ -72,10 +74,12 @@ if %x% geq 6 if %x% leq 70 (
 		if !select! leq !ln! (
 			for %%a in (!select!) do (
 				set cname=!l%%ana!
-				start "" cmd /c "chat\!l%%aty!\get.bat"
+				call "cpath.bat"
+				start cmd /c "chat\!l%%aty!\get.bat"
 			)
 		)
 	)
+	endlocal
 )
 if %x% geq 76 if %x% leq 77 (
 	if %y% equ 4 set /a lp-=4&set last=

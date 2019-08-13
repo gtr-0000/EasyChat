@@ -1,5 +1,5 @@
-cls
-http get "$return" "%server%/list/user/add.asp" "apikey=%apikey%"
+@echo off
+http get "$return" "%server%/list/user/add.asp" "apikey=%apikey%" "name=%cname:""=%"
 if %errorlevel% neq 0 set "error=Á¬½Ó´íÎó %errorlevel%" & goto error
 set /p return=<"$return"
 del "$return"
