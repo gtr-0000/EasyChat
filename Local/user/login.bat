@@ -40,8 +40,8 @@ del "$input.txt"
 goto mouse
 
 :login
-if not defined name set name=a1
-if not defined pass set pass=123
+if not defined name goto input1
+if not defined pass goto input2
 timage "user\login.0.bmp" 0 0 /transparentblt
 rem 注意引号 " 变成了 chr(1), 即
 set return=
