@@ -1,6 +1,7 @@
 @echo off
 mode 80,25
 tcurs /crv 0
+call "cpath.bat" G
 if exist "%cpath%\#open" del "%cpath%\#open" >nul 2>nul
 if exist "%cpath%\#open" exit /b
 break >> "%cpath%\chat.txt"

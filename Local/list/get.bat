@@ -1,3 +1,4 @@
+call "upath.bat"
 if exist "%upath%\#open" del "%upath%\#open" >nul 2>nul
 if exist "%upath%\#open" exit /b
 break >> "%upath%\clist.txt"
@@ -74,7 +75,6 @@ if %x% geq 6 if %x% leq 70 (
 		if !select! leq !ln! (
 			for %%a in (!select!) do (
 				set cname=!l%%ana!
-				call "cpath.bat"
 				start cmd /c "chat\!l%%aty!\get.bat"
 			)
 		)

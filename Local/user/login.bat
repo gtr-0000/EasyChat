@@ -53,7 +53,6 @@ timage "user\login.bmp" 0 0 /transparentblt
 if "%return:~,1%"=="0" (
 	set "uname=%name:"=""%"
 	set "apikey=%return:~2%"
-	call "upath.bat"
 	call "list\get.bat"
 	call "user\logout.bat"
 	goto init
