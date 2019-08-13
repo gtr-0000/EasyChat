@@ -4,10 +4,12 @@ response.contenttype = "text/plain"
 
 dbinit
 
-dim apikey, uname
+dim apikey, uname, cid
 
 apikey = request.querystring("apikey")
+cid = request.querystring("cid")
 uname = apikey2name(apikey)
+
 if uname = "" then
 	response.write "1 apikey错误"
 else
@@ -26,7 +28,7 @@ else
 	else
 		response.write "0 获取成功" & vbcrlf
 		rs.close
-		set rs = dbexecf("select id,uname,ctime,ctext from uchat where cname = %s", array(cname))
+		set rs = dbexecf("select id,uname,ctime,ctext from uchat where cname = %s and id > %d", array(cname, cid))
 		response.write rsfmt(rs, false)
 		rs.close
 	end if
