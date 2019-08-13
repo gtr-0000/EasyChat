@@ -33,7 +33,7 @@ if %lp% geq %ln1% set /a lp=ln1,last=1
 if %lp% leq 1 set /a lp=1,first=1
 
 setlocal enabledelayedexpansion
-set disp="list\get.bmp*0*0"
+set disp="list\get.bmp*0*0" "%uname%*48*16*ËÎÌו*12*ffffffff"
 if not defined first set disp=!disp! "list\get.up.bmp*608*64"
 if not defined last set disp=!disp! "list\get.down.bmp*608*368"
 set /a lp1=lp+4
