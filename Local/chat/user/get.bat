@@ -4,7 +4,6 @@ tcurs /crv 0
 call "cpath.bat" U
 if exist "%cpath%\#open.txt" del "%cpath%\#open.txt" >nul 2>nul
 if exist "%cpath%\#open.txt" exit /b
-break >> "%cpath%\chat.txt"
 2>>"%cpath%\@get.txt" (call :main 3>"%cpath%\#open.txt")
 exit /b
 

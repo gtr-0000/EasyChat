@@ -22,7 +22,7 @@ if "%return:~,1%"=="0" (
 	sleep 1000
 	goto loop
 )
->>"%cpath%\chat.txt" (
+>"%cpath%\chat0.txt" (
 	for /f "skip=1 usebackq tokens=1-4 delims=	" %%a in ("%cpath%\$return.txt") do (
 		set cid=%%a
 		echo $%%c
@@ -38,9 +38,10 @@ if "%return:~,1%"=="0" (
 		)
 	)
 )
+call "wrapline.bat" "%cpath%\chat0.txt" 58 >> "%cpath%\chat.txt"
 (echo %cid%)>"%cpath%\cid.txt"
 sleep 1000
 
-if exist "%cpath%\#exit" exit /b
+if exist "%cpath%\#exit.txt" exit /b
 
 goto loop

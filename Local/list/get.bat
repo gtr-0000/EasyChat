@@ -1,7 +1,6 @@
 call "upath.bat"
 if exist "%upath%\#open.txt" del "%upath%\#open.txt" >nul 2>nul
 if exist "%upath%\#open.txt" exit /b
-break >> "%upath%\clist.txt"
 2>>"%upath%\@get.txt" (call :main 3>"%upath%\#open.txt")
 exit /b
 
