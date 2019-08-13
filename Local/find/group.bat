@@ -80,6 +80,7 @@ if %x% geq 6 if %x% leq 70 (
 			for %%a in (!select!) do (
 				set cname=!l%%ana!
 				start /b /wait cmd /c "list\group\add.bat"
+				call "cpath.bat"
 				start cmd /c "chat\group\get.bat"
 				exit /b
 			)
