@@ -33,10 +33,10 @@ tcurs /pos 25 13
 echo;                                
 tcurs /pos 25 13 /crv 1
 timage "user\login.bmp" 0 0 /transparentblt
-password -password >"$input"
+password -password >"$input.txt"
 set pass=
-set /p pass=<"$input"
-del "$input"
+set /p pass=<"$input.txt"
+del "$input.txt"
 goto mouse
 
 :login
@@ -45,10 +45,10 @@ if not defined pass set pass=123
 timage "user\login.0.bmp" 0 0 /transparentblt
 rem 注意引号 " 变成了 chr(1), 即
 set return=
-http get "$return" "%server%/user/login.asp" "name=%name:"=%" "pass=%pass:"=%"
+http get "$return.txt" "%server%/user/login.asp" "name=%name:"=%" "pass=%pass:"=%"
 if %errorlevel% neq 0 set "error=连接错误 %errorlevel%" & goto loginerror
-set /p return=<"$return"
-del "$return"
+set /p return=<"$return.txt"
+del "$return.txt"
 timage "user\login.bmp" 0 0 /transparentblt
 if "%return:~,1%"=="0" (
 	set "uname=%name:"=""%"

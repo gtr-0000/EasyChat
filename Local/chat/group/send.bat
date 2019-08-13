@@ -1,7 +1,7 @@
 @echo off
-2>>"%cpath%\@send.txt" (call :main 3>"%cpath%\#send")
+2>>"%cpath%\@send.txt" (call :main 3>"%cpath%\#send.txt")
 if not defined text exit /b
-http get "%cpath%\$send" "%server%/chat/group/send.asp" "apikey=%apikey%" "name=%cname:"=%" "text=%text:"=%"
+http get "%cpath%\$send.txt" "%server%/chat/group/send.asp" "apikey=%apikey%" "name=%cname:"=%" "text=%text:"=%"
 exit /b
 
 :main

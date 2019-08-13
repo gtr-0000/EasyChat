@@ -28,14 +28,13 @@ if not defined name goto input1
 timage "group\new.0.bmp" 0 0 /transparentblt
 
 rem 注意引号 " 变成了 chr(1), 即
-http get "$return" "%server%/group/new.asp" "apikey=%apikey%" "name=%name:"=%"
+http get "$return.txt" "%server%/group/new.asp" "apikey=%apikey%" "name=%name:"=%"
 if %errorlevel% neq 0 set "error=连接错误 %errorlevel%" & goto newerror
-set /p return=<"$return"
-del "$return"
+set /p return=<"$return.txt"
 timage "group\new.bmp" 0 0 /transparentblt
 if "%return:~,1%"=="0" (
-	gdi "/T:%mtitle%" "创建成功*270*295*黑体*14*ff0000ff"
-	tmouse /d 0 3 1
+	set "cname=%name:"=""%"
+	start cmd /c "chat\group\get.bat"
 	exit /b
 ) else (
 	set "error=%return:~2%"

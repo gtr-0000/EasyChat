@@ -22,10 +22,10 @@ tcurs /pos 25 9
 echo;                                
 tcurs /pos 25 9 /crv 1
 timage user\config\pass.bmp 0 0 /transparentblt
-password -password >"$input" 2>con
+password -password >"$input.txt" 2>con
 set pold=
-set /p pold=<"$input"
-del "$input"
+set /p pold=<"$input.txt"
+del "$input.txt"
 if defined pold if not defined pass goto input2
 goto mouse
 
@@ -34,10 +34,10 @@ tcurs /pos 25 13
 echo;                                
 tcurs /pos 25 13 /crv 1
 timage user\config\pass.bmp 0 0 /transparentblt
-password -password >"$input" 2>con
+password -password >"$input.txt" 2>con
 set pass=
-set /p pass=<"$input"
-del "$input"
+set /p pass=<"$input.txt"
+del "$input.txt"
 if defined pass if not defined pas2 goto input3
 goto mouse
 
@@ -46,10 +46,10 @@ tcurs /pos 25 17
 echo;                                
 tcurs /pos 25 17 /crv 1
 timage user\config\pass.bmp 0 0 /transparentblt
-password -password >"$input" 2>con
+password -password >"$input.txt" 2>con
 set pas2=
-set /p pas2=<"$input"
-del "$input"
+set /p pas2=<"$input.txt"
+del "$input.txt"
 goto mouse
 
 :change
@@ -60,10 +60,9 @@ if not defined pas2 goto input3
 if "%pass:"=""%" neq "%pas2:"=""%" set error=两次密码不一致 & goto passerror
 
 rem 注意引号 " 变成了 chr(1), 即
-http get "$return" "%server%/user/config/pass.asp" "apikey=%apikey%" "pold=%pold:"=%" "pass=%pass:"=%"
+http get "$return.txt" "%server%/user/config/pass.asp" "apikey=%apikey%" "pold=%pold:"=%" "pass=%pass:"=%"
 if %errorlevel% neq 0 set error=连接错误 %errorlevel% & goto passerror
-set /p return=<"$return"
-del "$return"
+set /p return=<"$return.txt"
 timage user\config\pass.bmp 0 0 /transparentblt
 if "%return:~,1%"=="0" (
 	gdi "/T:%mtitle%" "修改成功*270*295*宋体*14*ff0000ff"

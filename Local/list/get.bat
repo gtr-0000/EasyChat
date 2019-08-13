@@ -1,12 +1,12 @@
 call "upath.bat"
-if exist "%upath%\#open" del "%upath%\#open" >nul 2>nul
-if exist "%upath%\#open" exit /b
+if exist "%upath%\#open.txt" del "%upath%\#open.txt" >nul 2>nul
+if exist "%upath%\#open.txt" exit /b
 break >> "%upath%\clist.txt"
-2>>"%upath%\debug.txt" (call :main 3>"%upath%\#open")
+2>>"%upath%\@get.txt" (call :main 3>"%upath%\#open.txt")
 exit /b
 
 :main
-del "%upath%\#exit" >nul 2>nul
+del "%upath%\#exit.txt" >nul 2>nul
 start /b cmd /c "list\getA.bat"
 
 cls
@@ -47,8 +47,8 @@ for /l %%a in (%lp%,1,%lp1%) do (
 		)
 	)
 )
-if exist "%upath%\$getAerr" (
-	set /p error=<"%upath%\$getAerr"
+if exist "%upath%\$getAerr.txt" (
+	set /p error=<"%upath%\$getAerr.txt"
 	set disp=!disp! "!error!*240*300*ºÚÌå*14*0000ffff"
 )
 
@@ -94,7 +94,7 @@ set /a y=%errorlevel%,x=y/1000,y=y%%1000
 if %x% geq 3 if %x% leq 10 (
 	if %y% equ 3 call "user\config\pass.bat"
 	if %y% equ 4 (
-		break > "%upath%\#exit"
+		break > "%upath%\#exit.txt"
 		exit /b
 	)
 	if %y% equ 6 call "app\update.bat"

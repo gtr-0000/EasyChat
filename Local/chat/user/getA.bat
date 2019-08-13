@@ -1,8 +1,7 @@
 @echo off
-del "%cpath%\#open" >nul 2>nul
-if not exist "%cpath%\#open" exit /b
-2>>"%cpath%\debug2.txt" (call :main 3>"%cpath%\#getA")
-del "%cpath%\#getA" >nul 2>nul
+del "%cpath%\#open.txt" >nul 2>nul
+if not exist "%cpath%\#open.txt" exit /b
+2>>"%cpath%\@getA.txt" (call :main 3>"%cpath%\#getA.txt")
 exit /b
 
 :main
@@ -10,21 +9,21 @@ exit /b
 :loop
 if not exist "%cpath%\cid.txt" (echo 0)> "%cpath%\cid.txt"
 set /p cid=<"%cpath%\cid.txt"
-http get "%cpath%\$return" "%server%/chat/user/get.asp" "apikey=%apikey%" "name=%cname:""=%" "cid=%cid%"
+http get "%cpath%\$return.txt" "%server%/chat/user/get.asp" "apikey=%apikey%" "name=%cname:""=%" "cid=%cid%"
 
-if exist "%cpath%\#exit" exit /b
+if exist "%cpath%\#exit.txt" exit /b
 
-if %errorlevel% neq 0 echo 连接错误 %errorlevel%>"%cpath%\$getAerr" & goto loop
-set /p $return=<"%cpath%\$return"
+if %errorlevel% neq 0 echo 连接错误 %errorlevel%>"%cpath%\$getAerr.txt" & goto loop
+set /p $return=<"%cpath%\$return.txt"
 if "%return:~,1%"=="0" (
-	del "%cpath%\$getAerr" >nul 2>nul
+	del "%cpath%\$getAerr.txt" >nul 2>nul
 ) else (
-	echo !return:~2!>"%cpath%\$getAerr"
+	echo !return:~2!>"%cpath%\$getAerr.txt"
 	sleep 1000
 	goto loop
 )
 >>"%cpath%\chat.txt" (
-	for /f "skip=1 usebackq tokens=1-4 delims=	" %%a in ("%cpath%\$return") do (
+	for /f "skip=1 usebackq tokens=1-4 delims=	" %%a in ("%cpath%\$return.txt") do (
 		set cid=%%a
 		echo $%%c
 		echo @%%b
@@ -40,7 +39,6 @@ if "%return:~,1%"=="0" (
 	)
 )
 (echo %cid%)>"%cpath%\cid.txt"
-del "%cpath%\$return"
 sleep 1000
 
 if exist "%cpath%\#exit" exit /b

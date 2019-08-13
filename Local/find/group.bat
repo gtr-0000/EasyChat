@@ -8,18 +8,18 @@ set find=
 
 :find
 if defined find (
-	http get "%upath%\$find" "%server%/find/group.asp" "find=%find:"=%" "apikey=%apikey%"
+	http get "%upath%\$find.txt" "%server%/find/group.asp" "find=%find:"=%" "apikey=%apikey%"
 ) else (
-	http get "%upath%\$find" "%server%/find/group.asp" "apikey=%apikey%"
+	http get "%upath%\$find.txt" "%server%/find/group.asp" "apikey=%apikey%"
 )
 if %errorlevel% neq 0 set "error=Á¬½Ó´íÎó %errorlevel%" & goto finderror
-set /p return=<"%upath%\$find"
+set /p return=<"%upath%\$find.txt"
 if not "%return:~,1%"=="0" set "error=%return:~2%" & goto finderror
 
 setlocal enabledelayedexpansion
 set n=0
-for /f "skip=1 usebackq" %%a in ("%upath%\$find") do set /a n+=1
-<"!upath!\$find" >"!upath!\find.txt" (
+for /f "skip=1 usebackq" %%a in ("%upath%\$find.txt") do set /a n+=1
+<"!upath!\$find.txt" >"!upath!\find.txt" (
 	set /p return=
 	for /l %%a in (1,1,%n%) do (
 		set /p l=
@@ -27,7 +27,6 @@ for /f "skip=1 usebackq" %%a in ("%upath%\$find") do set /a n+=1
 	)
 )
 endlocal
-del "%upath%\$find"
 
 :mouse
 tcurs /crv 0

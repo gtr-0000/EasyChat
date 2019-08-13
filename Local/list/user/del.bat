@@ -1,8 +1,7 @@
 @echo off
-http get "$return" "%server%/list/user/del.asp" "apikey=%apikey%" "name=%cname:""=%"
+http get "$return.txt" "%server%/list/user/del.asp" "apikey=%apikey%" "name=%cname:""=%"
 if %errorlevel% neq 0 set "error=Á¬½Ó´íÎó %errorlevel%" & goto error
-set /p return=<"$return"
-del "$return"
+set /p return=<"$return.txt"
 if "%return:~,1%"=="0" (
 	set apikey=
 ) else (

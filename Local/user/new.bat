@@ -33,10 +33,10 @@ tcurs /pos 25 13
 echo;                                
 tcurs /pos 25 13 /crv 1
 timage "user\new.bmp" 0 0 /transparentblt
-password -32 -password >"$input"
+password -32 -password >"$input.txt"
 set pass=
-set /p pass=<"$input"
-del "$input"
+set /p pass=<"$input.txt"
+del "$input.txt"
 if defined pass if not defined pas2 goto input3
 goto mouse
 
@@ -45,10 +45,10 @@ tcurs /pos 25 17
 echo;                                
 tcurs /pos 25 17 /crv 1
 timage "user\new.bmp" 0 0 /transparentblt
-password -32 -password >"$input"
+password -32 -password >"$input.txt"
 set pas2=
-set /p pas2=<"$input"
-del "$input"
+set /p pas2=<"$input.txt"
+del "$input.txt"
 goto mouse
 
 :new
@@ -59,10 +59,9 @@ timage "user\new.0.bmp" 0 0 /transparentblt
 if "%pass:"=""%" neq "%pas2:"=""%" set error=两次密码不一致 & goto newerror
 
 rem 注意引号 " 变成了 chr(1), 即
-http get "$return" "%server%/user/new.asp" "name=%name:"=%" "pass=%pass:"=%"
+http get "$return.txt" "%server%/user/new.asp" "name=%name:"=%" "pass=%pass:"=%"
 if %errorlevel% neq 0 set error=连接错误 %errorlevel% & goto newerror
-set /p return=<"$return"
-del "$return"
+set /p return=<"$return.txt"
 timage "user\new.bmp" 0 0 /transparentblt
 if "%return:~,1%"=="0" (
 	gdi "/T:%mtitle%" "注册成功*270*295*黑体*14*ff0000ff"

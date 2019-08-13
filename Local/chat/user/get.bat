@@ -2,14 +2,14 @@
 mode 80,25
 tcurs /crv 0
 call "cpath.bat" U
-if exist "%cpath%\#open" del "%cpath%\#open" >nul 2>nul
-if exist "%cpath%\#open" exit /b
+if exist "%cpath%\#open.txt" del "%cpath%\#open.txt" >nul 2>nul
+if exist "%cpath%\#open.txt" exit /b
 break >> "%cpath%\chat.txt"
-2>>"%cpath%\debug.txt" (call :main 3>"%cpath%\#open")
+2>>"%cpath%\@get.txt" (call :main 3>"%cpath%\#open.txt")
 exit /b
 
 :main
-del "%cpath%\#exit" >nul 2>nul
+del "%cpath%\#exit.txt" >nul 2>nul
 start /b cmd /c "chat\user\getA.bat"
 
 cls
@@ -55,8 +55,8 @@ set /a lp1=lp+14
 		)
 	)
 )
-if exist "%cpath%\$getAerr" (
-	set /p error=<"%cpath%\$getAerr"
+if exist "%cpath%\$getAerr.txt" (
+	set /p error=<"%cpath%\$getAerr.txt"
 	set disp=!disp! "!error!*240*300*ºÚÌå*14*0000ffff"
 )
 
