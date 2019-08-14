@@ -70,7 +70,7 @@ if %x% geq 6 if %x% leq 70 (
 		if %y% geq !y1! if %y% leq !y2! set select=%%a
 	)
 	if defined select (
-		set /a select+=lp-1 
+		set /a select+=lp-1
 		if !select! leq !ln! (
 			for %%a in (!select!) do (
 				set cname=!l%%ana!

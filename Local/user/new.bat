@@ -20,7 +20,7 @@ goto mouse
 
 :input1
 tcurs /pos 25 9
-echo;                                
+echo;
 tcurs /pos 25 9 /crv 1
 timage "user\new.bmp" 0 0 /transparentblt
 set name=
@@ -30,7 +30,7 @@ goto mouse
 
 :input2
 tcurs /pos 25 13
-echo;                                
+echo;
 tcurs /pos 25 13 /crv 1
 timage "user\new.bmp" 0 0 /transparentblt
 password -32 -password >"$input.txt"
@@ -42,7 +42,7 @@ goto mouse
 
 :input3
 tcurs /pos 25 17
-echo;                                
+echo;
 tcurs /pos 25 17 /crv 1
 timage "user\new.bmp" 0 0 /transparentblt
 password -32 -password >"$input.txt"
@@ -52,8 +52,8 @@ del "$input.txt"
 goto mouse
 
 :new
-if not defined name goto input1 
-if not defined pass goto input2 
+if not defined name goto input1
+if not defined pass goto input2
 if not defined pas2 goto input3
 timage "user\new.0.bmp" 0 0 /transparentblt
 if "%pass:"=""%" neq "%pas2:"=""%" set error=两次密码不一致 & goto newerror

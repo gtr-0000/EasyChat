@@ -19,7 +19,7 @@ goto mouse
 
 :input1
 tcurs /pos 25 9
-echo;                                
+echo;
 tcurs /pos 25 9 /crv 1
 timage user\config\pass.bmp 0 0 /transparentblt
 password -password >"$input.txt" 2>con
@@ -31,7 +31,7 @@ goto mouse
 
 :input2
 tcurs /pos 25 13
-echo;                                
+echo;
 tcurs /pos 25 13 /crv 1
 timage user\config\pass.bmp 0 0 /transparentblt
 password -password >"$input.txt" 2>con
@@ -43,7 +43,7 @@ goto mouse
 
 :input3
 tcurs /pos 25 17
-echo;                                
+echo;
 tcurs /pos 25 17 /crv 1
 timage user\config\pass.bmp 0 0 /transparentblt
 password -password >"$input.txt" 2>con
@@ -54,8 +54,8 @@ goto mouse
 
 :change
 timage user\config\pass.0.bmp 0 0 /transparentblt
-if not defined pold goto input1 
-if not defined pass goto input2 
+if not defined pold goto input1
+if not defined pass goto input2
 if not defined pas2 goto input3
 if "%pass:"=""%" neq "%pas2:"=""%" set error=两次密码不一致 & goto passerror
 

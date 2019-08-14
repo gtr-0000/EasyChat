@@ -20,7 +20,7 @@ goto mouse
 
 :input1
 tcurs /pos 25 9
-echo;                                
+echo;
 tcurs /pos 25 9 /crv 1
 timage "user\login.bmp" 0 0 /transparentblt
 set name=
@@ -30,7 +30,7 @@ goto mouse
 
 :input2
 tcurs /pos 25 13
-echo;                                
+echo;
 tcurs /pos 25 13 /crv 1
 timage "user\login.bmp" 0 0 /transparentblt
 password -password >"$input.txt"

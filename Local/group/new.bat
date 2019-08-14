@@ -16,7 +16,7 @@ goto mouse
 
 :input1
 tcurs /pos 25 9
-echo;                                
+echo;
 tcurs /pos 25 9 /crv 1
 timage "group\new.bmp" 0 0 /transparentblt
 set name=
@@ -24,7 +24,7 @@ set /p name=
 goto mouse
 
 :new
-if not defined name goto input1 
+if not defined name goto input1
 timage "group\new.0.bmp" 0 0 /transparentblt
 
 rem 注意引号 " 变成了 chr(1), 即
