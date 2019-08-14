@@ -6,6 +6,4 @@ title EasyChat 2019
 color f9
 mode 80,25
 path common;common\bin;%path%
-rem @cmd /k prompt $$
-rem @exit /b
-call "user\login"
+call "user\login.bat"
