@@ -1,8 +1,9 @@
+@echo off
 call "upath.bat"
 if exist "%upath%\#open.txt" del "%upath%\#open.txt" >nul 2>nul
-if exist "%upath%\#open.txt" exit /b
+if exist "%upath%\#open.txt" exit
 2>>"%upath%\@get.txt" (call :main 3>"%upath%\#open.txt")
-exit /b
+exit
 
 :main
 del "%upath%\#exit.txt" >nul 2>nul
@@ -87,16 +88,13 @@ if %x% geq 76 if %x% leq 77 (
 goto mouse
 
 :menu
-timage "list\get.menu.bmp" 16 32 /transparentblt
+timage "list\get.menu.bmp" 0 0 /transparentblt
 tmouse /d 0 -1 1
 set /a y=%errorlevel%,x=y/1000,y=y%%1000
-if %x% geq 3 if %x% leq 10 (
-	if %y% equ 3 call "user\config\pass.bat"
-	if %y% equ 4 (
-		break > "%upath%\#exit.txt"
-		exit /b
-	)
-	if %y% equ 6 call "app\update.bat"
+if %x% leq 24 (
+	if %y% geq 3 if %y% leq 5 call "user\config\pass.bat"
+	if %y% geq 6 if %y% leq 8 call "user\logout.bat"&&exit
+	if %y% geq 22 call "app\update.bat"
 )
 goto mouse
 

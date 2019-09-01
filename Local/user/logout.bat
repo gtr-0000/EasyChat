@@ -11,3 +11,4 @@ exit /b
 :error
 gdi "/T:%mtitle%" "%error%*240*300*ËÎÌו*14*0000ffff"
 tmouse /d 0 3 1
+exit /b 1
